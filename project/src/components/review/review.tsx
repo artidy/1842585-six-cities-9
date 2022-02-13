@@ -21,7 +21,7 @@ function Review(): JSX.Element {
         <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
       </div>
     </li>
-  )
+  );
 }
 
 export default Review;

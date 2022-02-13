@@ -38,7 +38,7 @@ function Favorites(): JSX.Element {
         </section>
       </div>
     </main>
-  )
+  );
 }
 
 export default Favorites;

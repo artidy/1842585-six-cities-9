@@ -106,12 +106,8 @@ function Offer(): JSX.Element {
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                   <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
                 </div>
-                <span className="property__user-name">
-                    Angelina
-                  </span>
-                <span className="property__user-status">
-                    Pro
-                  </span>
+                <span className="property__user-name">Angelina</span>
+                <span className="property__user-status">Pro</span>
               </div>
               <div className="property__description">
                 <p className="property__text">
@@ -146,8 +142,7 @@ function Offer(): JSX.Element {
                     </svg>
                   </label>
 
-                  <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars"
-                         type="radio" />
+                  <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio" />
                   <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
                     <svg className="form__star-image" width="37" height="33">
                       <use xlinkHref="#icon-star" />
@@ -172,8 +167,7 @@ function Offer(): JSX.Element {
                   className="reviews__textarea form__textarea"
                   id="review"
                   name="review"
-                  placeholder="Tell how was your stay, what you like and what can be improved">
-                </textarea>
+                  placeholder="Tell how was your stay, what you like and what can be improved"/>
                 <div className="reviews__button-wrapper">
                   <p className="reviews__help">
                     To submit review please make sure to set <span className="reviews__star">rating</span> and describe
@@ -198,7 +192,7 @@ function Offer(): JSX.Element {
         </section>
       </div>
     </main>
-  )
+  );
 }
 
 export default Offer;

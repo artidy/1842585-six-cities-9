@@ -25,7 +25,7 @@ function Login(): JSX.Element {
         </section>
       </div>
     </main>
-  )
+  );
 }
 
 export default Login;

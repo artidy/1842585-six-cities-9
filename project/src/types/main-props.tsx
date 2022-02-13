@@ -3,4 +3,4 @@ type MainProps = {
   placeCount: number;
 }
 
-export default MainProps
+export default MainProps;
