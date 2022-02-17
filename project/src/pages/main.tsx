@@ -1,5 +1,5 @@
-import PlaceCard from '../place-card/place-card';
-import MainProps from '../../types/main-props';
+import PlaceCard from '../components/place-card/place-card';
+import MainProps from '../types/main-props';
 
 function Main({placeCount}: MainProps): JSX.Element {
   return (

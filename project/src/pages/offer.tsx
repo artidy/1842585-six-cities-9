@@ -1,5 +1,5 @@
-import Review from '../review/review';
-import PlaceCard from '../place-card/place-card';
+import Review from '../components/review/review';
+import PlaceCard from '../components/place-card/place-card';
 
 function Offer(): JSX.Element {
   return (
