@@ -7,6 +7,8 @@ import Login from '../../pages/login';
 import Favorites from '../../pages/favorites';
 import Offer from '../../pages/offer';
 import NotFound from '../../pages/not-found';
+import Layout from '../layout/layout';
+import PrivateRoute from '../private-route/private-route';
 
 function App({placeCount}: MainProps): JSX.Element {
   return (
@@ -14,20 +16,29 @@ function App({placeCount}: MainProps): JSX.Element {
       <Routes>
         <Route
           path={AppRoutes.Main}
-          element={<Main placeCount={placeCount} />}
-        />
-        <Route
-          path={AppRoutes.Login}
-          element={<Login />}
-        />
-        <Route
-          path={AppRoutes.Favorites}
-          element={<Favorites />}
-        />
-        <Route
-          path={`${AppRoutes.Offer}/:id`}
-          element={<Offer />}
-        />
+          element={<Layout />}
+        >
+          <Route
+            index
+            element={<Main placeCount={placeCount} />}
+          />
+          <Route
+            path={AppRoutes.Login}
+            element={<Login />}
+          />
+          <Route
+            path={AppRoutes.Favorites}
+            element={
+              <PrivateRoute>
+                <Favorites />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={`${AppRoutes.Offer}/:id`}
+            element={<Offer />}
+          />
+        </Route>
         <Route
           path={AppRoutes.NotFound}
           element={<NotFound />}

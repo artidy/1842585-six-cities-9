@@ -1,10 +1,12 @@
+import {Link} from 'react-router-dom';
+
 function PlaceCard(): JSX.Element {
   return (
     <article className="cities__place-card place-card">
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="/">
+        <Link to="/offer/1">
           <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place apartment" />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -26,7 +28,7 @@ function PlaceCard(): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">Canal View Prinsengracht</a>
+          <Link to="/offer/1">Canal View Prinsengracht</Link>
         </h2>
         <p className="place-card__type">Apartment</p>
       </div>

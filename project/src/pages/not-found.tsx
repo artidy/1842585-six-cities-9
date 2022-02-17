@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-function NotFound() {
+function NotFound(): JSX.Element {
   return (
     <Fragment>
       <h1>
