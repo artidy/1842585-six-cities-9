@@ -1,4 +1,3 @@
-
 type MainProps = {
   placeCount: number;
 }

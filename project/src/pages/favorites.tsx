@@ -1,4 +1,5 @@
-import PlaceCard from '../place-card/place-card';
+import PlaceCard from '../components/place-card/place-card';
+import {Link} from 'react-router-dom';
 
 function Favorites(): JSX.Element {
   return (
@@ -10,27 +11,27 @@ function Favorites(): JSX.Element {
             <li className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
-                  <a className="locations__item-link" href="/">
+                  <Link className="locations__item-link" to="/">
                     <span>Amsterdam</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="favorites__places">
-                {PlaceCard()}
-                {PlaceCard()}
+                <PlaceCard />
+                <PlaceCard />
               </div>
             </li>
 
             <li className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
-                  <a className="locations__item-link" href="/">
+                  <Link className="locations__item-link" to="/">
                     <span>Cologne</span>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="favorites__places">
-                {PlaceCard()}
+                <PlaceCard />
               </div>
             </li>
           </ul>

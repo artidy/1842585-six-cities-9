@@ -1,5 +1,5 @@
-import PlaceCard from '../place-card/place-card';
-import MainProps from '../../types/main-props';
+import PlaceCard from '../components/place-card/place-card';
+import MainProps from '../types/main-props';
 
 function Main({placeCount}: MainProps): JSX.Element {
   return (
@@ -62,11 +62,11 @@ function Main({placeCount}: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {PlaceCard()}
-              {PlaceCard()}
-              {PlaceCard()}
-              {PlaceCard()}
-              {PlaceCard()}
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
+              <PlaceCard />
             </div>
           </section>
           <div className="cities__right-section">
