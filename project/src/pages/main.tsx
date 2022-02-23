@@ -1,7 +1,12 @@
+import Hotel from '../types/hotel';
 import PlaceCard from '../components/place-card/place-card';
-import MainProps from '../types/main-props';
 
-function Main({placeCount}: MainProps): JSX.Element {
+type MainProps = {
+  placeCount: number;
+  offers: Hotel[];
+};
+
+function Main({placeCount, offers}: MainProps): JSX.Element {
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
@@ -62,11 +67,9 @@ function Main({placeCount}: MainProps): JSX.Element {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
-              <PlaceCard />
+              {offers.map((offer: Hotel) => (
+                <PlaceCard key={offer.id} offer={offer} />
+              ))}
             </div>
           </section>
           <div className="cities__right-section">

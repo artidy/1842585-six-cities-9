@@ -1,16 +1,23 @@
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 
-import MainProps from '../../types/main-props';
 import {AppRoutes} from '../../const';
-import Main from '../../pages/main';
-import Login from '../../pages/login';
+import Favorite from '../../types/favorite';
 import Favorites from '../../pages/favorites';
-import Offer from '../../pages/offer';
-import NotFound from '../../pages/not-found';
+import Hotel from '../../types/hotel';
 import Layout from '../layout/layout';
+import Login from '../../pages/login';
+import Main from '../../pages/main';
+import NotFound from '../../pages/not-found';
+import Offer from '../../pages/offer';
 import PrivateRoute from '../private-route/private-route';
 
-function App({placeCount}: MainProps): JSX.Element {
+type AppProps = {
+  placeCount: number;
+  offers: Hotel[];
+  favorites: Favorite[];
+}
+
+function App({placeCount, offers, favorites}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -20,7 +27,7 @@ function App({placeCount}: MainProps): JSX.Element {
         >
           <Route
             index
-            element={<Main placeCount={placeCount} />}
+            element={<Main placeCount={placeCount} offers={offers} />}
           />
           <Route
             path={AppRoutes.Login}
@@ -30,13 +37,13 @@ function App({placeCount}: MainProps): JSX.Element {
             path={AppRoutes.Favorites}
             element={
               <PrivateRoute>
-                <Favorites />
+                <Favorites favorites={favorites} />
               </PrivateRoute>
             }
           />
           <Route
             path={`${AppRoutes.Offer}/:id`}
-            element={<Offer />}
+            element={<Offer offers={offers} />}
           />
         </Route>
         <Route

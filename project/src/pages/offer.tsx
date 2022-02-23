@@ -1,7 +1,12 @@
-import Review from '../components/review/review';
+import Hotel from '../types/hotel';
 import PlaceCard from '../components/place-card/place-card';
+import Review from '../components/review/review';
 
-function Offer(): JSX.Element {
+type OfferProps = {
+  offers: Hotel[];
+};
+
+function Offer({offers}: OfferProps): JSX.Element {
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -123,7 +128,7 @@ function Offer(): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
               <ul className="reviews__list">
-                {Review()}
+                <Review />
               </ul>
               <form className="reviews__form form" action="#" method="post">
                 <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -186,9 +191,9 @@ function Offer(): JSX.Element {
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            {PlaceCard()}
-            {PlaceCard()}
-            {PlaceCard()}
+            {offers.map((offerNear: Hotel) => (
+              <PlaceCard key={offerNear.id} offer={offerNear} />
+            ))}
           </div>
         </section>
       </div>
