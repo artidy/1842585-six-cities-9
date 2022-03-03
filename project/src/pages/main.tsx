@@ -1,4 +1,5 @@
 import Hotel from '../types/hotel';
+import Map from '../components/map/map';
 import PlaceCard from '../components/place-card/place-card';
 
 type MainProps = {
@@ -73,7 +74,7 @@ function Main({placeCount, offers}: MainProps): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <Map />
           </div>
         </div>
       </div>
