@@ -109,7 +109,12 @@ function Main({placeCount, offers}: MainProps): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <Map city={currentCity} locations={points} selectedPoint={undefined} />
+            <Map
+              className="cities__map map"
+              city={currentCity}
+              locations={points}
+              selectedPoint={undefined}
+            />
           </div>
         </div>
       </div>

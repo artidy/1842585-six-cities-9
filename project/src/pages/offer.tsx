@@ -1,13 +1,39 @@
+import {useParams} from 'react-router-dom';
+
+import City from '../types/city';
 import Hotel from '../types/hotel';
+import Location from '../types/location';
+import Map from '../components/map/map';
 import PlaceCard from '../components/place-card/place-card';
 import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
+import {DEFAULT_CITY} from '../const';
 
 type OfferProps = {
   offers: Hotel[];
 };
 
 function Offer({offers}: OfferProps): JSX.Element {
+  const {id} = useParams();
+  const currentCity = getCurrentCity();
+  const locations = getLocations();
+
+  function getCurrentCity(): City {
+    return id === undefined ? DEFAULT_CITY : offers.find((offer: Hotel) => offer.id === +id)?.city || DEFAULT_CITY;
+  }
+
+  function getLocations(): Location[] {
+    const points: Location[] = [];
+
+    offers.forEach((offer: Hotel) => {
+      if (offer.city.name === currentCity.name) {
+        points.push(offer.location);
+      }
+    });
+
+    return points;
+  }
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -133,7 +159,7 @@ function Offer({offers}: OfferProps): JSX.Element {
             </section>
           </div>
         </div>
-        <section className="property__map map"/>
+        <Map className="property__map map" city={currentCity} locations={locations} selectedPoint={undefined} />
       </section>
       <div className="container">
         <section className="near-places places">
