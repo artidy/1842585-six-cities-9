@@ -1,13 +1,39 @@
+import {useParams} from 'react-router-dom';
+
+import City from '../types/city';
 import Hotel from '../types/hotel';
-import PlaceCard from '../components/place-card/place-card';
-import Review from '../components/review/review';
+import Location from '../types/location';
+import Map from '../components/map/map';
+import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
+import {DEFAULT_CITY} from '../const';
+import Places from '../components/places/places';
 
 type OfferProps = {
   offers: Hotel[];
 };
 
 function Offer({offers}: OfferProps): JSX.Element {
+  const {id} = useParams();
+  const currentCity = getCurrentCity();
+  const locations = getLocations();
+
+  function getCurrentCity(): City {
+    return id === undefined ? DEFAULT_CITY : offers.find((offer: Hotel) => offer.id === +id)?.city || DEFAULT_CITY;
+  }
+
+  function getLocations(): Location[] {
+    const points: Location[] = [];
+
+    offers.forEach((offer: Hotel) => {
+      if (offer.city.name === currentCity.name) {
+        points.push(offer.location);
+      }
+    });
+
+    return points;
+  }
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -128,23 +154,17 @@ function Offer({offers}: OfferProps): JSX.Element {
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                <Review />
-              </ul>
+              <Reviews />
               <ReviewForm />
             </section>
           </div>
         </div>
-        <section className="property__map map"/>
+        <Map className="property__map map" city={currentCity} locations={locations} selectedPoint={undefined} />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            {offers.map((offerNear: Hotel) => (
-              <PlaceCard key={offerNear.id} offer={offerNear} />
-            ))}
-          </div>
+          <Places className="near-places__list places__list" offers={offers} />
         </section>
       </div>
     </main>
