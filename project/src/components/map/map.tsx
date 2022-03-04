@@ -32,6 +32,7 @@ function Map({locations, city, selectedPoint}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
       locations.forEach((location: Location) => {
         const marker = new Marker({
           lat: location.latitude,
