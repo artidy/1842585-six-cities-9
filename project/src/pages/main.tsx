@@ -3,9 +3,9 @@ import {MouseEvent, useEffect, useState} from 'react';
 import City from '../types/city';
 import Hotel from '../types/hotel';
 import Map from '../components/map/map';
-import PlaceCard from '../components/place-card/place-card';
 import Location from '../types/location';
 import {DEFAULT_CITY} from '../const';
+import Places from '../components/places/places';
 
 type MainProps = {
   placeCount: number;
@@ -102,11 +102,7 @@ function Main({placeCount, offers}: MainProps): JSX.Element {
                 <li className="places__option" tabIndex={0}>Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              {offers.map((offer: Hotel) => (
-                <PlaceCard key={offer.id} offer={offer} />
-              ))}
-            </div>
+            <Places className="cities__places-list places__list tabs__content" offers={offers} />
           </section>
           <div className="cities__right-section">
             <Map

@@ -4,10 +4,10 @@ import City from '../types/city';
 import Hotel from '../types/hotel';
 import Location from '../types/location';
 import Map from '../components/map/map';
-import PlaceCard from '../components/place-card/place-card';
 import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
 import {DEFAULT_CITY} from '../const';
+import Places from '../components/places/places';
 
 type OfferProps = {
   offers: Hotel[];
@@ -164,11 +164,7 @@ function Offer({offers}: OfferProps): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            {offers.map((offerNear: Hotel) => (
-              <PlaceCard key={offerNear.id} offer={offerNear} />
-            ))}
-          </div>
+          <Places className="near-places__list places__list" offers={offers} />
         </section>
       </div>
     </main>
