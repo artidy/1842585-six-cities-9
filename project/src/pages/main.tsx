@@ -1,5 +1,11 @@
+import {MouseEvent, useEffect, useState} from 'react';
+
+import City from '../types/city';
 import Hotel from '../types/hotel';
+import Map from '../components/map/map';
 import PlaceCard from '../components/place-card/place-card';
+import Location from '../types/location';
+import {DEFAULT_CITY} from '../const';
 
 type MainProps = {
   placeCount: number;
@@ -7,42 +13,72 @@ type MainProps = {
 };
 
 function Main({placeCount, offers}: MainProps): JSX.Element {
+  const [currentCity, setCurrentCity] = useState<City>(DEFAULT_CITY);
+  const [points, setPoints] = useState<Location[]>(getCurrentPoints());
+  const [cities, setCities] = useState<City[]>([]);
+
+  useEffect(() => {
+    setPoints(getCurrentPoints());
+  }, [currentCity]);
+
+  useEffect(() => {
+    setCities(getCities());
+  }, [offers]);
+
+  function getCurrentPoints(): Location[] {
+    const locations: Location[] = [];
+
+    offers.forEach(({city, location}: Hotel) => {
+      if (currentCity.name === city.name) {
+        locations.push(location);
+      }
+    });
+
+    return locations;
+  }
+
+  function getCurrentCity(name: string): City {
+    return offers.find(({city}) => city.name === name)?.city ?? DEFAULT_CITY;
+  }
+
+  function changeCurrentCity(name: string) {
+    return function (evt: MouseEvent<HTMLAnchorElement>) {
+      evt.preventDefault();
+
+      setCurrentCity(getCurrentCity(name));
+    };
+  }
+
+  function getCities(): City[] {
+    const values: City[] = [];
+
+    offers.forEach(({city}) => {
+      if (!values.find((value) => value.name === city.name)) {
+        values.push(city);
+      }
+    });
+
+    return values;
+  }
+
   return (
     <main className="page__main page__main--index">
       <h1 className="visually-hidden">Cities</h1>
       <div className="tabs">
         <section className="locations container">
           <ul className="locations__list tabs__list">
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="/">
-                <span>Paris</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="/">
-                <span>Cologne</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="/">
-                <span>Brussels</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item tabs__item--active" href="/">
-                <span>Amsterdam</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="/">
-                <span>Hamburg</span>
-              </a>
-            </li>
-            <li className="locations__item">
-              <a className="locations__item-link tabs__item" href="/">
-                <span>Dusseldorf</span>
-              </a>
-            </li>
+            {
+              cities.map((city: City) => (
+                <li key={city.location.latitude + city.location.longitude} className="locations__item">
+                  <a
+                    className={`locations__item-link tabs__item ${city.name === currentCity.name ? 'tabs__item--active': ''}`}
+                    onClick={changeCurrentCity(city.name)}
+                  >
+                    <span>{city.name}</span>
+                  </a>
+                </li>
+              ))
+            }
           </ul>
         </section>
       </div>
@@ -59,7 +95,7 @@ function Main({placeCount, offers}: MainProps): JSX.Element {
                   <use xlinkHref="#icon-arrow-select" />
                 </svg>
               </span>
-              <ul className="places__options places__options--custom places__options--opened">
+              <ul className="places__options places__options--custom">
                 <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                 <li className="places__option" tabIndex={0}>Price: low to high</li>
                 <li className="places__option" tabIndex={0}>Price: high to low</li>
@@ -73,7 +109,7 @@ function Main({placeCount, offers}: MainProps): JSX.Element {
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map" />
+            <Map city={currentCity} locations={points} selectedPoint={undefined} />
           </div>
         </div>
       </div>
