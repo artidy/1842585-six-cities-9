@@ -3,7 +3,7 @@ import {useEffect, useRef} from 'react';
 
 import City from '../../types/city';
 import Location from '../../types/location';
-import {URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
+import {DEFAULT_ANCHOR_SIZE, DEFAULT_ICON_SIZE, URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 import useMap from '../../hooks/useMap';
 
 import 'leaflet/dist/leaflet.css';
@@ -16,14 +16,14 @@ type MapProps = {
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: DEFAULT_ICON_SIZE,
+  iconAnchor: DEFAULT_ANCHOR_SIZE,
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40, 40],
-  iconAnchor: [20, 40],
+  iconSize: DEFAULT_ICON_SIZE,
+  iconAnchor: DEFAULT_ANCHOR_SIZE,
 });
 
 function Map({locations, city, selectedPoint}: MapProps): JSX.Element {
@@ -47,7 +47,7 @@ function Map({locations, city, selectedPoint}: MapProps): JSX.Element {
         ).addTo(map);
       });
     }
-  }, [city, locations, selectedPoint]);
+  }, [map, city, locations, selectedPoint]);
 
   return (
     <div
