@@ -1,6 +1,6 @@
 import Hotel from '../types/hotel';
 import PlaceCard from '../components/place-card/place-card';
-import Review from '../components/review/review';
+import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
 
 type OfferProps = {
@@ -128,9 +128,7 @@ function Offer({offers}: OfferProps): JSX.Element {
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
-              <ul className="reviews__list">
-                <Review />
-              </ul>
+              <Reviews />
               <ReviewForm />
             </section>
           </div>
