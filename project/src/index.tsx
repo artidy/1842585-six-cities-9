@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {offers} from './mocks/offers';
 import {favorites} from './mocks/favorites';
+import {Provider} from 'react-redux';
+import {store} from './store';
 
 const Settings = {
   placeCount: 350,
@@ -12,10 +14,12 @@ const Settings = {
 
 ReactDOM.render(
   <React.StrictMode>
-    <App
-      placeCount={Settings.placeCount}
-      offers={Settings.offers}
-      favorites={Settings.favorites}
-    />
+    <Provider store={store}>
+      <App
+        placeCount={Settings.placeCount}
+        offers={Settings.offers}
+        favorites={Settings.favorites}
+      />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
