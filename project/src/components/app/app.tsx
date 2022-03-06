@@ -10,14 +10,20 @@ import Main from '../../pages/main';
 import NotFound from '../../pages/not-found';
 import Offer from '../../pages/offer';
 import PrivateRoute from '../private-route/private-route';
+import {useAppDispatch} from '../../hooks/store';
+import {loadFavorites, loadOffers} from '../../store/actions';
 
 type AppProps = {
-  placeCount: number;
   offers: Hotel[];
   favorites: Favorite[];
 }
 
-function App({placeCount, offers, favorites}: AppProps): JSX.Element {
+function App({offers, favorites}: AppProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  dispatch(loadOffers(offers));
+  dispatch(loadFavorites(favorites));
+
   return (
     <BrowserRouter>
       <Routes>
@@ -27,7 +33,7 @@ function App({placeCount, offers, favorites}: AppProps): JSX.Element {
         >
           <Route
             index
-            element={<Main placeCount={placeCount} offers={offers} />}
+            element={<Main offers={offers} />}
           />
           <Route
             path={AppRoutes.Login}

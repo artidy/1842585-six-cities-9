@@ -1,6 +1,6 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, loadFavorites, loadOffers} from './actions';
-import {DEFAULT_CITY} from '../const';
+import {changeCity, changeSelectedPoint, loadFavorites, loadOffers} from './actions';
+import {DEFAULT_CITY, DEFAULT_SELECTED_POINT} from '../const';
 import Hotel from '../types/hotel';
 import Favorite from '../types/favorite';
 
@@ -9,9 +9,9 @@ const INITIAL_FAVORITES: Favorite[] = [];
 
 const initialState = {
   city: DEFAULT_CITY,
-  placeCount: 0,
-  offers: INITIAL_OFFERS,
-  favorites: INITIAL_FAVORITES,
+  cityOffers: INITIAL_OFFERS,
+  cityFavorites: INITIAL_FAVORITES,
+  selectedPoint: DEFAULT_SELECTED_POINT,
 };
 
 const reducer = createReducer(initialState, (builder) =>
@@ -20,10 +20,13 @@ const reducer = createReducer(initialState, (builder) =>
       state.city = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
-      state.offers = action.payload;
+      state.cityOffers = action.payload;
     })
     .addCase(loadFavorites, (state, action) => {
-      state.favorites = action.payload;
+      state.cityFavorites = action.payload;
+    })
+    .addCase(changeSelectedPoint, (state, action) => {
+      state.selectedPoint = action.payload;
     }),
 );
 

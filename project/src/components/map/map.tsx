@@ -1,18 +1,16 @@
 import {Icon, Marker} from 'leaflet';
 import {useEffect, useRef} from 'react';
 
-import City from '../../types/city';
 import Location from '../../types/location';
 import {DEFAULT_ANCHOR_SIZE, DEFAULT_ICON_SIZE, URL_MARKER_CURRENT, URL_MARKER_DEFAULT} from '../../const';
 import useMap from '../../hooks/useMap';
 
 import 'leaflet/dist/leaflet.css';
+import {useAppSelector} from '../../hooks/store';
+import {getCurrentPoints} from '../../functions';
 
 type MapProps = {
   className: string;
-  locations: Location[];
-  city: City;
-  selectedPoint: Location | undefined;
 }
 
 const defaultCustomIcon = new Icon({
@@ -27,14 +25,17 @@ const currentCustomIcon = new Icon({
   iconAnchor: DEFAULT_ANCHOR_SIZE,
 });
 
-function Map({className, locations, city, selectedPoint}: MapProps): JSX.Element {
+function Map({className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
+  const {cityOffers, city, selectedPoint} = useAppSelector((state) => state);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
+      const points = getCurrentPoints(cityOffers);
+
       map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
-      locations.forEach((location: Location) => {
+      points.forEach((location: Location) => {
         const marker = new Marker({
           lat: location.latitude,
           lng: location.longitude,
@@ -49,7 +50,7 @@ function Map({className, locations, city, selectedPoint}: MapProps): JSX.Element
         ).addTo(map);
       });
     }
-  }, [map, city, locations, selectedPoint]);
+  }, [map, city, cityOffers, selectedPoint]);
 
   return (
     <section

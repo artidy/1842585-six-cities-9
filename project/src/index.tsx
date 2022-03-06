@@ -7,7 +7,6 @@ import {Provider} from 'react-redux';
 import {store} from './store';
 
 const Settings = {
-  placeCount: 350,
   offers,
   favorites,
 };
@@ -16,7 +15,6 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        placeCount={Settings.placeCount}
         offers={Settings.offers}
         favorites={Settings.favorites}
       />
