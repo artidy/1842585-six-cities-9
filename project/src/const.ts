@@ -10,6 +10,13 @@ enum AppRoutes {
   NotFound = '*'
 }
 
+enum SortingType {
+  Popular = 'Popular',
+  PriceLow = 'Price: low to high',
+  PriceHigh = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
 const CITIES: City[] = [
   {
     name: 'Paris',
@@ -72,4 +79,4 @@ const DEFAULT_SELECTED_POINT: SelectedPoint = {
   zoom: 0,
 };
 
-export {AppRoutes, CITIES, DEFAULT_ICON_SIZE, DEFAULT_ANCHOR_SIZE, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, DEFAULT_SELECTED_POINT};
+export {AppRoutes, SortingType, CITIES, DEFAULT_ICON_SIZE, DEFAULT_ANCHOR_SIZE, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, DEFAULT_SELECTED_POINT};
