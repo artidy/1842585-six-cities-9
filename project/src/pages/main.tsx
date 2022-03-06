@@ -14,12 +14,12 @@ type MainProps = {
 }
 
 function Main({offers}: MainProps): JSX.Element {
-  const {cityOffers, city} = useAppSelector((state) => state);
+  const {cityOffers, city, sortingType} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(loadOffers(getCityOffers(offers, city.name)));
-  }, [city, offers, dispatch]);
+    dispatch(loadOffers(getCityOffers(offers, city.name, sortingType)));
+  }, [city, offers, sortingType, dispatch]);
 
   return (
     <main className="page__main page__main--index">
