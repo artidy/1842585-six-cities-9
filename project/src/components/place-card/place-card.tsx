@@ -1,13 +1,26 @@
 import {Link} from 'react-router-dom';
 import Hotel from '../../types/hotel';
+import {useAppDispatch} from '../../hooks/store';
+import {changeSelectedPoint} from '../../store/actions';
+import {DEFAULT_SELECTED_POINT} from '../../const';
 
 type PlaceCardProps = {
   offer: Hotel;
 };
 
 function PlaceCard({offer}: PlaceCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  function onMouseEnterCard() {
+    dispatch(changeSelectedPoint(offer.location));
+  }
+
+  function onMouseLeaveCard() {
+    dispatch(changeSelectedPoint(DEFAULT_SELECTED_POINT));
+  }
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={onMouseEnterCard} onMouseLeave={onMouseLeaveCard}>
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
           <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place apartment" />
