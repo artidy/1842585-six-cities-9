@@ -1,13 +1,15 @@
-import {useParams} from 'react-router-dom';
+import {Navigate, useParams} from 'react-router-dom';
 
-import City from '../types/city';
 import Hotel from '../types/hotel';
-import Location from '../types/location';
 import Map from '../components/map/map';
 import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
-import {DEFAULT_CITY} from '../const';
+import {AppRoutes} from '../const';
 import Places from '../components/places/places';
+import {useAppDispatch, useAppSelector} from '../hooks/store';
+import {changeCity, loadOffers} from '../store/actions';
+import {useEffect} from 'react';
+import {getCityOffers} from '../functions';
 
 type OfferProps = {
   offers: Hotel[];
@@ -15,24 +17,19 @@ type OfferProps = {
 
 function Offer({offers}: OfferProps): JSX.Element {
   const {id} = useParams();
-  const currentCity = getCurrentCity();
-  const locations = getLocations();
+  const currentOffer = id === undefined ? undefined : offers.find((offer: Hotel) => offer.id === +id);
+  const dispatch = useAppDispatch();
+  const {city, cityOffers} = useAppSelector((state) => state);
 
-  function getCurrentCity(): City {
-    return id === undefined ? DEFAULT_CITY : offers.find((offer: Hotel) => offer.id === +id)?.city || DEFAULT_CITY;
+  useEffect(() => {
+    dispatch(loadOffers(getCityOffers(offers, city.name)));
+  }, [city, offers, dispatch]);
+
+  if (currentOffer === undefined) {
+    return <Navigate to={AppRoutes.NotFound} />;
   }
 
-  function getLocations(): Location[] {
-    const points: Location[] = [];
-
-    offers.forEach((offer: Hotel) => {
-      if (offer.city.name === currentCity.name) {
-        points.push(offer.location);
-      }
-    });
-
-    return points;
-  }
+  dispatch(changeCity(currentOffer.city));
 
   return (
     <main className="page__main page__main--property">
@@ -159,12 +156,12 @@ function Offer({offers}: OfferProps): JSX.Element {
             </section>
           </div>
         </div>
-        <Map className="property__map map" city={currentCity} locations={locations} selectedPoint={undefined} />
+        <Map className="property__map map" />
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <Places className="near-places__list places__list" offers={offers} />
+          <Places className="near-places__list places__list" offers={cityOffers} />
         </section>
       </div>
     </main>
