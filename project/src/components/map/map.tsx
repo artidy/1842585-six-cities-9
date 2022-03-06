@@ -34,7 +34,6 @@ function Map({className}: MapProps): JSX.Element {
     if (map) {
       const points = getCurrentPoints(cityOffers);
 
-      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
       points.forEach((location: Location) => {
         const marker = new Marker({
           lat: location.latitude,

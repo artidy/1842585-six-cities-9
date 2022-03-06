@@ -10,6 +10,13 @@ enum AppRoutes {
   NotFound = '*'
 }
 
+enum SortingType {
+  Popular = 'Popular',
+  PriceLow = 'Price: low to high',
+  PriceHigh = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
+
 const CITIES: City[] = [
   {
     name: 'Paris',
@@ -61,8 +68,8 @@ const CITIES: City[] = [
   },
 ];
 
-const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
+const URL_MARKER_DEFAULT = 'img/pin.svg';
+const URL_MARKER_CURRENT = 'img/pin-active.svg';
 const DEFAULT_ICON_SIZE: PointExpression = [40, 40];
 const DEFAULT_ANCHOR_SIZE: PointExpression = [20, 40];
 const DEFAULT_CITY = CITIES[0];
@@ -72,4 +79,4 @@ const DEFAULT_SELECTED_POINT: SelectedPoint = {
   zoom: 0,
 };
 
-export {AppRoutes, CITIES, DEFAULT_ICON_SIZE, DEFAULT_ANCHOR_SIZE, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, DEFAULT_SELECTED_POINT};
+export {AppRoutes, SortingType, CITIES, DEFAULT_ICON_SIZE, DEFAULT_ANCHOR_SIZE, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, DEFAULT_SELECTED_POINT};

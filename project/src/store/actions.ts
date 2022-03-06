@@ -8,5 +8,6 @@ const changeCity = createAction<City>('changeCity');
 const loadOffers = createAction<Hotel[]>('loadOffers');
 const loadFavorites = createAction<Favorite[]>('loadFavorites');
 const changeSelectedPoint = createAction<SelectedPoint>('changeSelectedPoint');
+const changeSortingType = createAction<string>('changeSortingType');
 
-export {changeCity, loadOffers, loadFavorites, changeSelectedPoint};
+export {changeCity, loadOffers, loadFavorites, changeSelectedPoint, changeSortingType};
