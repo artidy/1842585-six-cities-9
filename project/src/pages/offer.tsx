@@ -25,7 +25,9 @@ function Offer(): JSX.Element {
     return <Navigate to={AppRoutes.NotFound} />;
   }
 
-  dispatch(changeCity(currentOffer.city));
+  if (currentOffer.city.name !== city.name) {
+    dispatch(changeCity(currentOffer.city));
+  }
 
   return (
     <main className="page__main page__main--property">

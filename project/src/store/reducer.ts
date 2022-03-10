@@ -3,7 +3,6 @@ import {
   changeCity,
   changeSelectedPoint,
   changeSortingType,
-  fetchFavorite,
   fetchHotels,
   loadFavorites,
   loadOffers
@@ -32,10 +31,6 @@ const reducer = createReducer(initialState, (builder) =>
     .addCase(fetchHotels, (state, action) => {
       state.offers = action.payload;
       state.offersLoaded = true;
-    })
-    .addCase(fetchFavorite, (state, action) => {
-      state.favorite = action.payload;
-      state.favoriteLoaded = true;
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
