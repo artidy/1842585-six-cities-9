@@ -19,7 +19,7 @@ function Offer(): JSX.Element {
 
   useEffect(() => {
     dispatch(loadOffers(getCityOffers(offers, city.name)));
-  }, [city, offers, dispatch]);
+  }, [id, city, offers, dispatch, currentOffer]);
 
   if (currentOffer === undefined) {
     return <Navigate to={AppRoutes.NotFound} />;
