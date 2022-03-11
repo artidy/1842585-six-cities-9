@@ -5,7 +5,7 @@ import {MouseEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
 
 function Cities(): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
+  const {city: currentCity} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   function getCurrentCity(name: string): City {

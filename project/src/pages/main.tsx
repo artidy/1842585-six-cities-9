@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 
-import Hotel from '../types/hotel';
 import Cities from '../components/cities/cities';
 import Map from '../components/map/map';
 import Places from '../components/places/places';
@@ -9,12 +8,8 @@ import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {loadOffers} from '../store/actions';
 import {getCityOffers} from '../functions';
 
-type MainProps = {
-  offers: Hotel[];
-}
-
-function Main({offers}: MainProps): JSX.Element {
-  const {cityOffers, city, sortingType} = useAppSelector((state) => state);
+function Main(): JSX.Element {
+  const {cityOffers, city, sortingType, offers} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

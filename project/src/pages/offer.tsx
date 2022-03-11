@@ -11,25 +11,23 @@ import {changeCity, loadOffers} from '../store/actions';
 import {useEffect} from 'react';
 import {getCityOffers} from '../functions';
 
-type OfferProps = {
-  offers: Hotel[];
-};
-
-function Offer({offers}: OfferProps): JSX.Element {
+function Offer(): JSX.Element {
   const {id} = useParams();
+  const {city, cityOffers, offers} = useAppSelector((state) => state);
   const currentOffer = id === undefined ? undefined : offers.find((offer: Hotel) => offer.id === +id);
   const dispatch = useAppDispatch();
-  const {city, cityOffers} = useAppSelector((state) => state);
 
   useEffect(() => {
     dispatch(loadOffers(getCityOffers(offers, city.name)));
-  }, [city, offers, dispatch]);
+  }, [id, city, offers, dispatch, currentOffer]);
 
   if (currentOffer === undefined) {
     return <Navigate to={AppRoutes.NotFound} />;
   }
 
-  dispatch(changeCity(currentOffer.city));
+  if (currentOffer.city.name !== city.name) {
+    dispatch(changeCity(currentOffer.city));
+  }
 
   return (
     <main className="page__main page__main--property">

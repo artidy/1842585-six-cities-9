@@ -79,4 +79,30 @@ const DEFAULT_SELECTED_POINT: SelectedPoint = {
   zoom: 0,
 };
 
-export {AppRoutes, SortingType, CITIES, DEFAULT_ICON_SIZE, DEFAULT_ANCHOR_SIZE, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, DEFAULT_CITY, DEFAULT_SELECTED_POINT};
+enum APIRoute {
+  Hotels = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+enum HTTP_CODE {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  NOT_FOUND = 404,
+}
+
+export {
+  AppRoutes,
+  SortingType,
+  CITIES,
+  DEFAULT_ICON_SIZE,
+  DEFAULT_ANCHOR_SIZE,
+  URL_MARKER_DEFAULT,
+  URL_MARKER_CURRENT,
+  DEFAULT_CITY,
+  DEFAULT_SELECTED_POINT,
+  APIRoute,
+  HTTP_CODE
+};

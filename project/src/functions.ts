@@ -30,4 +30,57 @@ function getCurrentPoints(cityOffers: Hotel[]): Location[] {
   return locations;
 }
 
-export {getCityOffers, getCurrentPoints};
+function convertHotel(
+  {
+    bedrooms,
+    city,
+    description,
+    goods,
+    host: {
+      avatarUrl,
+      id: hostId,
+      isPro,
+      name,
+    },
+    id,
+    images,
+    isFavorite,
+    isPremium,
+    location,
+    maxAdults,
+    previewImage,
+    price,
+    rating,
+    title,
+    type,
+  }: Hotel): Hotel {
+  return {
+    bedrooms,
+    city,
+    description,
+    goods,
+    host: {
+      avatarUrl,
+      id: hostId,
+      isPro,
+      name,
+    },
+    id,
+    images,
+    isFavorite,
+    isPremium,
+    location,
+    maxAdults,
+    previewImage,
+    price,
+    rating,
+    title,
+    type,
+  };
+}
+
+function convertHotels(hotels: Hotel[]): Hotel[] {
+  return hotels.map((hotel: Hotel) => convertHotel(hotel));
+}
+
+export {getCityOffers, getCurrentPoints, convertHotel, convertHotels};

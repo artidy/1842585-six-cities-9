@@ -1,5 +1,12 @@
 import {createReducer} from '@reduxjs/toolkit';
-import {changeCity, changeSelectedPoint, changeSortingType, loadFavorites, loadOffers} from './actions';
+import {
+  changeCity,
+  changeSelectedPoint,
+  changeSortingType,
+  fetchHotels,
+  loadFavorites,
+  loadOffers
+} from './actions';
 import {DEFAULT_CITY, DEFAULT_SELECTED_POINT, SortingType} from '../const';
 import Hotel from '../types/hotel';
 import Favorite from '../types/favorite';
@@ -13,10 +20,18 @@ const initialState = {
   cityFavorites: INITIAL_FAVORITES,
   selectedPoint: DEFAULT_SELECTED_POINT,
   sortingType: SortingType.Popular.toString(),
+  offers: INITIAL_OFFERS,
+  favorite: INITIAL_FAVORITES,
+  offersLoaded: false,
+  favoriteLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) =>
   builder
+    .addCase(fetchHotels, (state, action) => {
+      state.offers = action.payload;
+      state.offersLoaded = true;
+    })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
     })
