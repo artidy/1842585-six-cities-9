@@ -1,18 +1,22 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {
+  authorization,
   changeCity,
   changeSelectedPoint,
   changeSortingType,
   fetchHotels,
   loadFavorites,
-  loadOffers, requireAuthorization
+  loadOffers,
+  requireAuthorization
 } from './actions';
 import {AuthorizationStatus, DEFAULT_CITY, DEFAULT_SELECTED_POINT, SortingType} from '../const';
 import Hotel from '../types/hotel';
 import Favorite from '../types/favorite';
+import {User} from '../types/user';
 
 const INITIAL_OFFERS: Hotel[] = [];
 const INITIAL_FAVORITES: Favorite[] = [];
+const INITIAL_USER: User = null as User;
 
 const initialState = {
   city: DEFAULT_CITY,
@@ -25,6 +29,7 @@ const initialState = {
   offersLoaded: false,
   favoriteLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  user: INITIAL_USER,
 };
 
 const reducer = createReducer(initialState, (builder) =>
@@ -50,6 +55,9 @@ const reducer = createReducer(initialState, (builder) =>
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(authorization, (state, action) => {
+      state.user = action.payload;
     }),
 );
 
