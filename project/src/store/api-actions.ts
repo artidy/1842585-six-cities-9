@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import Hotel from '../types/hotel';
-import {APIRoute} from '../const';
-import {fetchHotels} from './actions';
+import {APIRoute, AuthorizationStatus} from '../const';
+import {fetchHotels, requireAuthorization} from './actions';
 import {errorHandle} from '../services/error-handle';
 import {convertHotels} from '../functions';
 
@@ -18,4 +18,16 @@ const fetchHotelsAction = createAsyncThunk(
   },
 );
 
-export {fetchHotelsAction};
+const checkUserAuth = createAsyncThunk(
+  'user/checkAuth',
+  async () => {
+    try {
+      await api.get(APIRoute.Login);
+      store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    } catch (error) {
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export {fetchHotelsAction, checkUserAuth};

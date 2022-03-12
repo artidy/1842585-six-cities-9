@@ -94,6 +94,12 @@ enum HTTP_CODE {
   NOT_FOUND = 404,
 }
 
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 export {
   AppRoutes,
   SortingType,
@@ -106,5 +112,6 @@ export {
   DEFAULT_CITY,
   DEFAULT_SELECTED_POINT,
   APIRoute,
-  HTTP_CODE
+  HTTP_CODE,
+  AuthorizationStatus
 };

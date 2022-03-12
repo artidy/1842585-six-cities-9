@@ -5,9 +5,9 @@ import {
   changeSortingType,
   fetchHotels,
   loadFavorites,
-  loadOffers
+  loadOffers, requireAuthorization
 } from './actions';
-import {DEFAULT_CITY, DEFAULT_SELECTED_POINT, SortingType} from '../const';
+import {AuthorizationStatus, DEFAULT_CITY, DEFAULT_SELECTED_POINT, SortingType} from '../const';
 import Hotel from '../types/hotel';
 import Favorite from '../types/favorite';
 
@@ -24,6 +24,7 @@ const initialState = {
   favorite: INITIAL_FAVORITES,
   offersLoaded: false,
   favoriteLoaded: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) =>
@@ -46,6 +47,9 @@ const reducer = createReducer(initialState, (builder) =>
     })
     .addCase(changeSortingType, (state, action) => {
       state.sortingType = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     }),
 );
 
