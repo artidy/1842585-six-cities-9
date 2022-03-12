@@ -1,6 +1,7 @@
 import {Link, Outlet} from 'react-router-dom';
 
 import {AppRoutes} from '../../const';
+import UserAuth from '../user-auth/user-auth';
 
 function Layout(): JSX.Element {
   return (
@@ -13,6 +14,7 @@ function Layout(): JSX.Element {
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
+            <UserAuth />
           </div>
         </div>
       </header>
