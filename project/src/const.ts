@@ -68,6 +68,7 @@ const CITIES: City[] = [
   },
 ];
 
+const AUTH_TOKEN_KEY_NAME = '8518442-six-cities';
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
 const DEFAULT_ICON_SIZE: PointExpression = [40, 40];
@@ -97,6 +98,7 @@ export {
   AppRoutes,
   SortingType,
   CITIES,
+  AUTH_TOKEN_KEY_NAME,
   DEFAULT_ICON_SIZE,
   DEFAULT_ANCHOR_SIZE,
   URL_MARKER_DEFAULT,
