@@ -1,6 +1,10 @@
 import Hotel from './types/hotel';
 import Location from './types/location';
-import {SortingType} from './const';
+import {AuthorizationStatus, SortingType} from './const';
+import {saveToken} from './services/token';
+import {store} from './store';
+import {authorization, requireAuthorization} from './store/actions';
+import {UserApi} from './types/user';
 
 function getCityOffers(offers: Hotel[], cityName: string, sortingType: string = SortingType.Popular): Hotel[] {
   const result = offers.filter(({city: cityOffer}: Hotel) => cityName === cityOffer.name);
@@ -83,4 +87,21 @@ function convertHotels(hotels: Hotel[]): Hotel[] {
   return hotels.map((hotel: Hotel) => convertHotel(hotel));
 }
 
-export {getCityOffers, getCurrentPoints, convertHotel, convertHotels};
+function isCheckedAuth(authorizationStatus: AuthorizationStatus): boolean {
+  return authorizationStatus === AuthorizationStatus.Unknown;
+}
+
+function setAuthorization(data: UserApi): void {
+  saveToken(data.token);
+  store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+  store.dispatch(authorization(data));
+}
+
+export {
+  getCityOffers,
+  getCurrentPoints,
+  convertHotel,
+  convertHotels,
+  isCheckedAuth,
+  setAuthorization
+};

@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import {fetchHotelsAction} from './store/api-actions';
+import {checkUserAuth, fetchHotelsAction} from './store/api-actions';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchHotelsAction());
+store.dispatch(checkUserAuth());
 
 ReactDOM.render(
   <React.StrictMode>

@@ -68,6 +68,7 @@ const CITIES: City[] = [
   },
 ];
 
+const AUTH_TOKEN_KEY_NAME = '8518442-six-cities';
 const URL_MARKER_DEFAULT = 'img/pin.svg';
 const URL_MARKER_CURRENT = 'img/pin-active.svg';
 const DEFAULT_ICON_SIZE: PointExpression = [40, 40];
@@ -93,10 +94,17 @@ enum HTTP_CODE {
   NOT_FOUND = 404,
 }
 
+enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 export {
   AppRoutes,
   SortingType,
   CITIES,
+  AUTH_TOKEN_KEY_NAME,
   DEFAULT_ICON_SIZE,
   DEFAULT_ANCHOR_SIZE,
   URL_MARKER_DEFAULT,
@@ -104,5 +112,6 @@ export {
   DEFAULT_CITY,
   DEFAULT_SELECTED_POINT,
   APIRoute,
-  HTTP_CODE
+  HTTP_CODE,
+  AuthorizationStatus
 };

@@ -1,10 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import Hotel from '../types/hotel';
-import {APIRoute} from '../const';
-import {fetchHotels} from './actions';
+import {APIRoute, AuthorizationStatus} from '../const';
+import {authorization, fetchHotels, requireAuthorization} from './actions';
 import {errorHandle} from '../services/error-handle';
-import {convertHotels} from '../functions';
+import {convertHotels, setAuthorization} from '../functions';
+import {UserApi} from '../types/user';
+import Auth from '../types/auth';
+import {dropToken} from '../services/token';
 
 const fetchHotelsAction = createAsyncThunk(
   'data/hotels',
@@ -18,4 +21,43 @@ const fetchHotelsAction = createAsyncThunk(
   },
 );
 
-export {fetchHotelsAction};
+const checkUserAuth = createAsyncThunk(
+  'user/checkAuth',
+  async () => {
+    try {
+      const {data} = await api.get<UserApi>(APIRoute.Login);
+      setAuthorization(data);
+    } catch (error) {
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+const login = createAsyncThunk(
+  'user/login',
+  async (auth: Auth) => {
+    try {
+      const {data} = await api.post<UserApi>(APIRoute.Login, auth);
+      setAuthorization(data);
+    } catch (error) {
+      errorHandle(error);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+const logout = createAsyncThunk(
+  'user/logout',
+  async () => {
+    try {
+      await api.delete(APIRoute.Logout);
+      store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+      store.dispatch(authorization(null));
+      dropToken();
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export {fetchHotelsAction, checkUserAuth, login, logout};

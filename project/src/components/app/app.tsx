@@ -10,12 +10,13 @@ import NotFound from '../../pages/not-found';
 import Offer from '../../pages/offer';
 import PrivateRoute from '../private-route/private-route';
 import {useAppSelector} from '../../hooks/store';
+import {isCheckedAuth} from '../../functions';
 
 
 function App(): JSX.Element {
-  const {offersLoaded} = useAppSelector((state) => state);
+  const {offersLoaded, authorizationStatus} = useAppSelector((state) => state);
 
-  if (!offersLoaded) {
+  if (isCheckedAuth(authorizationStatus) || !offersLoaded) {
     return <Loader />;
   }
 
