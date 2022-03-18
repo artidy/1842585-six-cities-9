@@ -7,9 +7,9 @@ import {AppRoutes} from '../const';
 import Places from '../components/places/places';
 import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {fetchCommentsAction, fetchCurrentHotelAction, fetchNearHotelsAction} from '../store/api-actions';
-import {useEffect} from 'react';
 import Loader from '../components/loader/loader';
 import {getRatingWidth} from '../functions';
+import {useEffect} from 'react';
 
 function Offer(): JSX.Element {
   const {id} = useParams();

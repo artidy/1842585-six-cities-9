@@ -41,9 +41,9 @@ const initialState = {
   favorite: INITIAL_FAVORITES,
   offersLoaded: false,
   favoriteLoaded: false,
-  currentOfferLoaded: true,
-  nearOffersLoaded: true,
-  commentsLoaded: true,
+  currentOfferLoaded: false,
+  nearOffersLoaded: false,
+  commentsLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: INITIAL_USER,
 };
@@ -60,21 +60,21 @@ const reducer = createReducer(initialState, (builder) =>
       state.currentOfferLoaded = true;
     })
     .addCase(setLoadingHotel, (state, action) => {
-      state.currentOfferLoaded = false;
+      state.currentOfferLoaded = action.payload;
     })
     .addCase(fetchNearHotels, (state, action) => {
       state.nearHotels = action.payload;
       state.nearOffersLoaded = true;
     })
     .addCase(setLoadingNearHotels, (state, action) => {
-      state.nearOffersLoaded = false;
+      state.nearOffersLoaded = action.payload;
     })
     .addCase(fetchComments, (state,action) => {
       state.comments = action.payload;
       state.commentsLoaded = true;
     })
     .addCase(setLoadingComments, (state, action) => {
-      state.commentsLoaded = false;
+      state.commentsLoaded = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;

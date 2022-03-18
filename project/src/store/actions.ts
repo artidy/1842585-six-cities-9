@@ -18,9 +18,9 @@ const fetchHotels = createAction<Hotel[]>('data/fetchHotels');
 const fetchCurrentHotel = createAction<CurrentHotel>('data/fetchCurrentHotel');
 const fetchNearHotels = createAction<Hotel[]>('data/fetchNearHotels');
 const fetchComments = createAction<UserComment[]>('data/fetchComments');
-const setLoadingHotel = createAction('data/changeLoadingHotel');
-const setLoadingNearHotels = createAction('data/changeLoadingNearHotels');
-const setLoadingComments = createAction('data/changeLoadingComments');
+const setLoadingHotel = createAction<boolean>('data/changeLoadingHotel');
+const setLoadingNearHotels = createAction<boolean>('data/changeLoadingNearHotels');
+const setLoadingComments = createAction<boolean>('data/changeLoadingComments');
 const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 const authorization = createAction<User>('user/authorization');
 

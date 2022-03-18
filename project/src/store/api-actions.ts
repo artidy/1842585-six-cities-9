@@ -9,8 +9,7 @@ import {
   fetchHotels,
   fetchNearHotels,
   requireAuthorization,
-  setLoadingComments,
-  setLoadingHotel,
+  setLoadingComments, setLoadingHotel,
   setLoadingNearHotels
 } from './actions';
 import {errorHandle} from '../services/error-handle';
@@ -36,10 +35,11 @@ const fetchCurrentHotelAction = createAsyncThunk(
   'data/hotels',
   async (hotelId: string) => {
     try {
-      store.dispatch(setLoadingHotel);
+      store.dispatch(setLoadingHotel(false));
       const {data} = await api.get<Hotel>(`${APIRoute.Hotels}/${hotelId}`);
       store.dispatch(fetchCurrentHotel(convertHotel(data)));
     } catch (error) {
+      store.dispatch(setLoadingHotel(true));
       errorHandle(error);
     }
   },
@@ -49,10 +49,11 @@ const fetchNearHotelsAction = createAsyncThunk(
   'data/hotels',
   async (hotelId: string) => {
     try {
-      store.dispatch(setLoadingNearHotels());
+      store.dispatch(setLoadingNearHotels(false));
       const {data} = await api.get<Hotel[]>(`${APIRoute.Hotels}/${hotelId}/nearby`);
       store.dispatch(fetchNearHotels(convertHotels(data)));
     } catch (error) {
+      store.dispatch(setLoadingNearHotels(true));
       errorHandle(error);
     }
   },
@@ -62,10 +63,11 @@ const fetchCommentsAction = createAsyncThunk(
   'data/comments',
   async (hotelId: string) => {
     try {
-      store.dispatch(setLoadingComments());
+      store.dispatch(setLoadingComments(false));
       const {data} = await api.get<UserComment[]>(`${APIRoute.Comments}/${hotelId}`);
       store.dispatch(fetchComments(convertComments(data)));
     } catch (error) {
+      store.dispatch(setLoadingComments(true));
       errorHandle(error);
     }
   },
