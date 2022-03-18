@@ -3,7 +3,7 @@ import {Navigate, useParams} from 'react-router-dom';
 import Map from '../components/map/map';
 import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
-import {AppRoutes} from '../const';
+import {AppRoutes, AuthorizationStatus} from '../const';
 import Places from '../components/places/places';
 import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {fetchCommentsAction, fetchCurrentHotelAction, fetchNearHotelsAction} from '../store/api-actions';
@@ -14,7 +14,14 @@ import {useEffect} from 'react';
 function Offer(): JSX.Element {
   const {id} = useParams();
   const hotelId = id || '';
-  const {currentOffer, nearHotels, comments, currentOfferLoaded, nearOffersLoaded} = useAppSelector((state) => state);
+  const {
+    currentOffer,
+    nearHotels,
+    comments,
+    currentOfferLoaded,
+    nearOffersLoaded,
+    authorizationStatus,
+  } = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -130,7 +137,7 @@ function Offer(): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <Reviews comments={comments} />
-              <ReviewForm hotelId={hotelId} />
+              {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm hotelId={hotelId} /> : null}
             </section>
           </div>
         </div>
