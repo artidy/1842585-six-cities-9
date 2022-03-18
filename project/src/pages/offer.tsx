@@ -14,7 +14,7 @@ import {useEffect} from 'react';
 function Offer(): JSX.Element {
   const {id} = useParams();
   const hotelId = id || '';
-  const {currentOffer, nearHotels, comments, currentOfferLoaded, nearOffersLoaded, commentsLoaded} = useAppSelector((state) => state);
+  const {currentOffer, nearHotels, comments, currentOfferLoaded, nearOffersLoaded} = useAppSelector((state) => state);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,8 +24,7 @@ function Offer(): JSX.Element {
   }, [hotelId, dispatch]);
 
   if (!currentOfferLoaded ||
-    !nearOffersLoaded ||
-    !commentsLoaded) {
+    !nearOffersLoaded) {
     return <Loader />;
   }
 
@@ -131,7 +130,7 @@ function Offer(): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <Reviews comments={comments} />
-              <ReviewForm />
+              <ReviewForm hotelId={hotelId} />
             </section>
           </div>
         </div>

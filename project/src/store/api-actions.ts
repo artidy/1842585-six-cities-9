@@ -18,6 +18,7 @@ import {UserApi} from '../types/user';
 import Auth from '../types/auth';
 import {dropToken} from '../services/token';
 import UserComment from '../types/user-comment';
+import {AddComment} from '../types/api-comment';
 
 const fetchHotelsAction = createAsyncThunk(
   'data/hotels',
@@ -73,6 +74,21 @@ const fetchCommentsAction = createAsyncThunk(
   },
 );
 
+const addCommentAction = createAsyncThunk(
+  'data/addComment',
+  async ({userComment, hotelId, resetForm}: AddComment) => {
+    try {
+      store.dispatch(setLoadingComments(false));
+      const {data} = await api.post<UserComment[]>(`${APIRoute.Comments}/${hotelId}`, userComment);
+      store.dispatch(fetchComments(convertComments(data)));
+      resetForm();
+    } catch (error) {
+      store.dispatch(setLoadingComments(true));
+      errorHandle(error);
+    }
+  },
+);
+
 const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -117,6 +133,7 @@ export {
   fetchCurrentHotelAction,
   fetchNearHotelsAction,
   fetchCommentsAction,
+  addCommentAction,
   checkUserAuth,
   login,
   logout

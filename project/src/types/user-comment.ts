@@ -1,14 +1,14 @@
-type UserComment = {
-  comment: string
-  date: string
-  id: number
-  rating: number
+import {ApiComment} from './api-comment';
+
+type UserComment = ApiComment & {
+  date: string;
+  id: number;
   user: {
-    avatarUrl: string
-    id: number
-    isPro: boolean
-    name: string
-  }
+    avatarUrl: string;
+    id: number;
+    isPro: boolean;
+    name: string;
+  };
 }
 
 export default UserComment;
