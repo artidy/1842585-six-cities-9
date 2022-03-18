@@ -8,9 +8,11 @@ import useMap from '../../hooks/useMap';
 import 'leaflet/dist/leaflet.css';
 import {useAppSelector} from '../../hooks/store';
 import {getCurrentPoints} from '../../functions';
+import Hotel from '../../types/hotel';
 
 type MapProps = {
   className: string;
+  offers: Hotel[];
 }
 
 const defaultCustomIcon = new Icon({
@@ -25,14 +27,14 @@ const currentCustomIcon = new Icon({
   iconAnchor: DEFAULT_ANCHOR_SIZE,
 });
 
-function Map({className}: MapProps): JSX.Element {
+function Map({className, offers}: MapProps): JSX.Element {
   const mapRef = useRef(null);
-  const {cityOffers, city, selectedPoint} = useAppSelector((state) => state);
+  const {city, selectedPoint} = useAppSelector((state) => state);
   const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      const points = getCurrentPoints(cityOffers);
+      const points = getCurrentPoints(offers);
 
       points.forEach((location: Location) => {
         const marker = new Marker({
@@ -49,7 +51,7 @@ function Map({className}: MapProps): JSX.Element {
         ).addTo(map);
       });
     }
-  }, [map, city, cityOffers, selectedPoint]);
+  }, [map, city, offers, selectedPoint]);
 
   return (
     <section

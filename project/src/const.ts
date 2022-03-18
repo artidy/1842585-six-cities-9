@@ -79,6 +79,7 @@ const DEFAULT_SELECTED_POINT: SelectedPoint = {
   longitude: 0,
   zoom: 0,
 };
+const ONE_STAR_RATING_WIDTH = 20;
 
 enum APIRoute {
   Hotels = '/hotels',
@@ -111,6 +112,7 @@ export {
   URL_MARKER_CURRENT,
   DEFAULT_CITY,
   DEFAULT_SELECTED_POINT,
+  ONE_STAR_RATING_WIDTH,
   APIRoute,
   HTTP_CODE,
   AuthorizationStatus

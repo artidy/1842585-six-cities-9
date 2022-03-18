@@ -1,24 +1,33 @@
-function Review(): JSX.Element {
+import UserComment from '../../types/user-comment';
+import {getRatingWidth} from '../../functions';
+
+type ReviewProps = {
+  comment: UserComment;
+}
+
+function Review({comment: {user: {avatarUrl, name}, rating, comment, date}}: ReviewProps): JSX.Element {
+  const ratingWidth = getRatingWidth(rating);
+
   return (
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
-        <span className="reviews__user-name">Max</span>
+        <span className="reviews__user-name">{name}</span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{ width: '80%' }} />
+            <span style={{ width: `${ratingWidth}%` }} />
             <span className="visually-hidden">Rating</span>
+            <span className="property__rating-value rating__value">{rating}</span>
           </div>
         </div>
         <p className="reviews__text">
-          A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-          building is green and from 18th century.
+          {comment}
         </p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        <time className="reviews__time" dateTime={date}>{date}</time>
       </div>
     </li>
   );

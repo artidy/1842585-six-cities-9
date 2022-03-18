@@ -23,6 +23,6 @@ type Hotel = {
   rating: number;
   title: string;
   type: string;
-}
+};
 
 export default Hotel;

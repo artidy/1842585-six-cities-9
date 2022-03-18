@@ -2,12 +2,23 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import Hotel from '../types/hotel';
 import {APIRoute, AuthorizationStatus} from '../const';
-import {authorization, fetchHotels, requireAuthorization} from './actions';
+import {
+  authorization,
+  fetchComments,
+  fetchCurrentHotel,
+  fetchHotels,
+  fetchNearHotels,
+  requireAuthorization,
+  setLoadingComments, setLoadingHotel,
+  setLoadingNearHotels
+} from './actions';
 import {errorHandle} from '../services/error-handle';
-import {convertHotels, setAuthorization} from '../functions';
+import {convertComments, convertHotel, convertHotels, setAuthorization} from '../functions';
 import {UserApi} from '../types/user';
 import Auth from '../types/auth';
 import {dropToken} from '../services/token';
+import UserComment from '../types/user-comment';
+import {AddComment} from '../types/api-comment';
 
 const fetchHotelsAction = createAsyncThunk(
   'data/hotels',
@@ -16,6 +27,63 @@ const fetchHotelsAction = createAsyncThunk(
       const {data} = await api.get<Hotel[]>(APIRoute.Hotels);
       store.dispatch(fetchHotels(convertHotels(data)));
     } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const fetchCurrentHotelAction = createAsyncThunk(
+  'data/hotels',
+  async (hotelId: string) => {
+    try {
+      store.dispatch(setLoadingHotel(false));
+      const {data} = await api.get<Hotel>(`${APIRoute.Hotels}/${hotelId}`);
+      store.dispatch(fetchCurrentHotel(convertHotel(data)));
+    } catch (error) {
+      store.dispatch(setLoadingHotel(true));
+      errorHandle(error);
+    }
+  },
+);
+
+const fetchNearHotelsAction = createAsyncThunk(
+  'data/hotels',
+  async (hotelId: string) => {
+    try {
+      store.dispatch(setLoadingNearHotels(false));
+      const {data} = await api.get<Hotel[]>(`${APIRoute.Hotels}/${hotelId}/nearby`);
+      store.dispatch(fetchNearHotels(convertHotels(data)));
+    } catch (error) {
+      store.dispatch(setLoadingNearHotels(true));
+      errorHandle(error);
+    }
+  },
+);
+
+const fetchCommentsAction = createAsyncThunk(
+  'data/comments',
+  async (hotelId: string) => {
+    try {
+      store.dispatch(setLoadingComments(false));
+      const {data} = await api.get<UserComment[]>(`${APIRoute.Comments}/${hotelId}`);
+      store.dispatch(fetchComments(convertComments(data)));
+    } catch (error) {
+      store.dispatch(setLoadingComments(true));
+      errorHandle(error);
+    }
+  },
+);
+
+const addCommentAction = createAsyncThunk(
+  'data/addComment',
+  async ({userComment, hotelId, resetForm}: AddComment) => {
+    try {
+      store.dispatch(setLoadingComments(false));
+      const {data} = await api.post<UserComment[]>(`${APIRoute.Comments}/${hotelId}`, userComment);
+      store.dispatch(fetchComments(convertComments(data)));
+      resetForm();
+    } catch (error) {
+      store.dispatch(setLoadingComments(true));
       errorHandle(error);
     }
   },
@@ -60,4 +128,13 @@ const logout = createAsyncThunk(
   },
 );
 
-export {fetchHotelsAction, checkUserAuth, login, logout};
+export {
+  fetchHotelsAction,
+  fetchCurrentHotelAction,
+  fetchNearHotelsAction,
+  fetchCommentsAction,
+  addCommentAction,
+  checkUserAuth,
+  login,
+  logout
+};

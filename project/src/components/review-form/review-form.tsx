@@ -1,15 +1,23 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
+import {addCommentAction} from '../../store/api-actions';
+import {useAppDispatch, useAppSelector} from '../../hooks/store';
 
-const INITIAL_RATING = '';
+const INITIAL_RATING = 0;
 const INITIAL_MESSAGE = '';
 
-function ReviewForm(): JSX.Element {
+type ReviewFormProps = {
+  hotelId: string;
+};
+
+function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(INITIAL_RATING);
   const [message, setMessage] = useState(INITIAL_MESSAGE);
+  const {commentsLoaded} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
 
   function changeRating(evt: ChangeEvent<HTMLInputElement>) {
     if (evt.target.tagName === 'INPUT') {
-      setRating(evt.target.value);
+      setRating(+evt.target.value);
     }
   }
 
@@ -17,8 +25,22 @@ function ReviewForm(): JSX.Element {
     setMessage(evt.target.value);
   }
 
+  function resetForm() {
+    setRating(INITIAL_RATING);
+    setMessage(INITIAL_MESSAGE);
+  }
+
   function sendReview(evt: FormEvent<HTMLFormElement>) {
     evt.preventDefault();
+
+    dispatch(addCommentAction({
+      userComment: {
+        comment: message,
+        rating,
+      },
+      hotelId: hotelId,
+      resetForm,
+    }));
   }
 
   return (
@@ -73,7 +95,7 @@ function ReviewForm(): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={rating === '' || message === ''}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={rating === 0 || message === '' || !commentsLoaded}>Submit</button>
       </div>
     </form>
   );

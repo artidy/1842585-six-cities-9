@@ -1,10 +1,11 @@
 import Hotel from './types/hotel';
 import Location from './types/location';
-import {AuthorizationStatus, SortingType} from './const';
+import {AuthorizationStatus, ONE_STAR_RATING_WIDTH, SortingType} from './const';
 import {saveToken} from './services/token';
 import {store} from './store';
 import {authorization, requireAuthorization} from './store/actions';
 import {UserApi} from './types/user';
+import UserComment from './types/user-comment';
 
 function getCityOffers(offers: Hotel[], cityName: string, sortingType: string = SortingType.Popular): Hotel[] {
   const result = offers.filter(({city: cityOffer}: Hotel) => cityName === cityOffer.name);
@@ -32,6 +33,10 @@ function getCurrentPoints(cityOffers: Hotel[]): Location[] {
   });
 
   return locations;
+}
+
+function getRatingWidth(rating: number): number {
+  return rating * ONE_STAR_RATING_WIDTH;
 }
 
 function convertHotel(
@@ -87,6 +92,37 @@ function convertHotels(hotels: Hotel[]): Hotel[] {
   return hotels.map((hotel: Hotel) => convertHotel(hotel));
 }
 
+function convertComment(
+  {
+    comment,
+    date,
+    id,
+    rating,
+    user: {
+      avatarUrl,
+      id: userId,
+      isPro,
+      name,
+    },
+  }: UserComment): UserComment {
+  return {
+    comment,
+    date,
+    id,
+    rating,
+    user: {
+      avatarUrl,
+      id: userId,
+      isPro,
+      name,
+    },
+  };
+}
+
+function convertComments(comments: UserComment[]): UserComment[] {
+  return comments.map((comment: UserComment) => convertComment(comment));
+}
+
 function isCheckedAuth(authorizationStatus: AuthorizationStatus): boolean {
   return authorizationStatus === AuthorizationStatus.Unknown;
 }
@@ -102,6 +138,8 @@ export {
   getCurrentPoints,
   convertHotel,
   convertHotels,
+  convertComments,
   isCheckedAuth,
-  setAuthorization
+  setAuthorization,
+  getRatingWidth
 };

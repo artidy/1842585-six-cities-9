@@ -33,7 +33,7 @@ function Main(): JSX.Element {
             <Places className="cities__places-list places__list tabs__content" offers={cityOffers} />
           </section>
           <div className="cities__right-section">
-            <Map className="cities__map map"/>
+            <Map className="cities__map map" offers={offers} />
           </div>
         </div>
       </div>

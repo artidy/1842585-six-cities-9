@@ -4,19 +4,29 @@ import {
   changeCity,
   changeSelectedPoint,
   changeSortingType,
-  fetchHotels,
+  fetchComments,
+  fetchCurrentHotel,
+  fetchHotels, fetchNearHotels,
   loadFavorites,
   loadOffers,
-  requireAuthorization
+  requireAuthorization,
+  setLoadingComments,
+  setLoadingHotel,
+  setLoadingNearHotels
 } from './actions';
 import {AuthorizationStatus, DEFAULT_CITY, DEFAULT_SELECTED_POINT, SortingType} from '../const';
 import Hotel from '../types/hotel';
 import Favorite from '../types/favorite';
 import {User} from '../types/user';
+import CurrentHotel from '../types/current-hotel';
+import UserComment from '../types/user-comment';
 
 const INITIAL_OFFERS: Hotel[] = [];
 const INITIAL_FAVORITES: Favorite[] = [];
 const INITIAL_USER: User = null as User;
+const INITIAL_OFFER: CurrentHotel = null as CurrentHotel;
+const INITIAL_NEAR_OFFERS: Hotel[] = [];
+const INITIAL_COMMENTS: UserComment[] = [];
 
 const initialState = {
   city: DEFAULT_CITY,
@@ -25,9 +35,15 @@ const initialState = {
   selectedPoint: DEFAULT_SELECTED_POINT,
   sortingType: SortingType.Popular.toString(),
   offers: INITIAL_OFFERS,
+  currentOffer: INITIAL_OFFER,
+  nearHotels: INITIAL_NEAR_OFFERS,
+  comments: INITIAL_COMMENTS,
   favorite: INITIAL_FAVORITES,
   offersLoaded: false,
   favoriteLoaded: false,
+  currentOfferLoaded: false,
+  nearOffersLoaded: false,
+  commentsLoaded: false,
   authorizationStatus: AuthorizationStatus.Unknown,
   user: INITIAL_USER,
 };
@@ -37,6 +53,28 @@ const reducer = createReducer(initialState, (builder) =>
     .addCase(fetchHotels, (state, action) => {
       state.offers = action.payload;
       state.offersLoaded = true;
+    })
+    .addCase(fetchCurrentHotel, (state, action) => {
+      state.currentOffer = action.payload;
+      state.city = state.currentOffer?.city || DEFAULT_CITY;
+      state.currentOfferLoaded = true;
+    })
+    .addCase(setLoadingHotel, (state, action) => {
+      state.currentOfferLoaded = action.payload;
+    })
+    .addCase(fetchNearHotels, (state, action) => {
+      state.nearHotels = action.payload;
+      state.nearOffersLoaded = true;
+    })
+    .addCase(setLoadingNearHotels, (state, action) => {
+      state.nearOffersLoaded = action.payload;
+    })
+    .addCase(fetchComments, (state,action) => {
+      state.comments = action.payload;
+      state.commentsLoaded = true;
+    })
+    .addCase(setLoadingComments, (state, action) => {
+      state.commentsLoaded = action.payload;
     })
     .addCase(changeCity, (state, action) => {
       state.city = action.payload;
