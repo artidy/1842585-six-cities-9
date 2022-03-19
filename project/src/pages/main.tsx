@@ -1,12 +1,11 @@
 import {useEffect} from 'react';
 
 import Cities from '../components/cities/cities';
-import Map from '../components/map/map';
-import Places from '../components/places/places';
-import Sorting from '../components/sorting/sorting';
 import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {loadOffers} from '../store/main-slice/main-slice';
 import {getCityOffers} from '../functions';
+import EmptyMainContainer from '../components/empty-main-container/empty-main-container';
+import MainContainer from '../components/main-container/main-container';
 
 function Main(): JSX.Element {
   const {cityOffers, city, sortingType, offers} = useAppSelector(({MAIN}) => MAIN);
@@ -25,17 +24,9 @@ function Main(): JSX.Element {
         </section>
       </div>
       <div className="cities">
-        <div className="cities__places-container container">
-          <section className="cities__places places">
-            <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{cityOffers.length} places to stay in {city.name}</b>
-            <Sorting />
-            <Places className="cities__places-list places__list tabs__content" offers={cityOffers} />
-          </section>
-          <div className="cities__right-section">
-            <Map className="cities__map map" offers={offers} />
-          </div>
-        </div>
+        {cityOffers.length === 0 ?
+          <EmptyMainContainer cityName={city.name} /> :
+          <MainContainer cityName={city.name} cityOffers={cityOffers} />}
       </div>
     </main>
   );
