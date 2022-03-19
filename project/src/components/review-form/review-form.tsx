@@ -6,7 +6,7 @@ const INITIAL_RATING = 0;
 const INITIAL_MESSAGE = '';
 
 type ReviewFormProps = {
-  hotelId: string;
+  hotelId: number;
 };
 
 function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
@@ -38,7 +38,7 @@ function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
         comment: message,
         rating,
       },
-      hotelId: hotelId,
+      hotelId,
       resetForm,
     }));
   }
