@@ -103,6 +103,9 @@ enum AuthorizationStatus {
 
 enum NameSpace {
   User = 'USER',
+  Main = 'MAIN',
+  Offer = 'OFFER',
+  Favorites = 'FAVORITES',
 }
 
 export {
