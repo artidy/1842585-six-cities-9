@@ -6,7 +6,8 @@ import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {login} from '../store/api-actions';
 
 function Login(): JSX.Element {
-  const {city, authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {city} = useAppSelector(({MAIN}) => MAIN);
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

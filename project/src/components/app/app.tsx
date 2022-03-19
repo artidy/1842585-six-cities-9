@@ -14,7 +14,8 @@ import {isCheckedAuth} from '../../functions';
 
 
 function App(): JSX.Element {
-  const {offersLoaded, authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
+  const {offersLoaded} = useAppSelector(({MAIN}) => MAIN);
 
   if (isCheckedAuth(authorizationStatus) || !offersLoaded) {
     return <Loader />;

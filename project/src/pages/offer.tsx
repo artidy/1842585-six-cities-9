@@ -20,8 +20,8 @@ function Offer(): JSX.Element {
     comments,
     currentOfferLoaded,
     nearOffersLoaded,
-    authorizationStatus,
-  } = useAppSelector((state) => state);
+  } = useAppSelector(({OFFER}) => OFFER);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -137,7 +137,7 @@ function Offer(): JSX.Element {
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <Reviews comments={comments} />
-              {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm hotelId={hotelId} /> : null}
+              {authorizationStatus === AuthorizationStatus.Auth ? <ReviewForm hotelId={+hotelId} /> : null}
             </section>
           </div>
         </div>

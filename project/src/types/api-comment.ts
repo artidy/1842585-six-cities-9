@@ -5,7 +5,7 @@ type ApiComment = {
 
 type AddComment = {
   userComment: ApiComment;
-  hotelId: string;
+  hotelId: number;
   resetForm: () => void;
 };
 

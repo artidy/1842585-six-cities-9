@@ -6,13 +6,13 @@ const INITIAL_RATING = 0;
 const INITIAL_MESSAGE = '';
 
 type ReviewFormProps = {
-  hotelId: string;
+  hotelId: number;
 };
 
 function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(INITIAL_RATING);
   const [message, setMessage] = useState(INITIAL_MESSAGE);
-  const {commentsLoaded} = useAppSelector((state) => state);
+  const {commentsLoaded} = useAppSelector(({OFFER}) => OFFER);
   const dispatch = useAppDispatch();
 
   function changeRating(evt: ChangeEvent<HTMLInputElement>) {
@@ -38,7 +38,7 @@ function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
         comment: message,
         rating,
       },
-      hotelId: hotelId,
+      hotelId,
       resetForm,
     }));
   }

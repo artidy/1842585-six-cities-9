@@ -101,6 +101,13 @@ enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+enum NameSpace {
+  User = 'USER',
+  Main = 'MAIN',
+  Offer = 'OFFER',
+  Favorites = 'FAVORITES',
+}
+
 export {
   AppRoutes,
   SortingType,
@@ -115,5 +122,6 @@ export {
   ONE_STAR_RATING_WIDTH,
   APIRoute,
   HTTP_CODE,
-  AuthorizationStatus
+  AuthorizationStatus,
+  NameSpace
 };

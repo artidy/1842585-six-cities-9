@@ -3,7 +3,7 @@ import Location from './types/location';
 import {AuthorizationStatus, ONE_STAR_RATING_WIDTH, SortingType} from './const';
 import {saveToken} from './services/token';
 import {store} from './store';
-import {authorization, requireAuthorization} from './store/actions';
+import {authorization, requireAuthorization} from './store/user-slice/user-slice';
 import {UserApi} from './types/user';
 import UserComment from './types/user-comment';
 

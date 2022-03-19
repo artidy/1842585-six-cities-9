@@ -2,16 +2,16 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api, store} from './index';
 import Hotel from '../types/hotel';
 import {APIRoute, AuthorizationStatus} from '../const';
+import {authorization, requireAuthorization} from './user-slice/user-slice';
+import {fetchHotels} from './main-slice/main-slice';
 import {
-  authorization,
   fetchComments,
   fetchCurrentHotel,
-  fetchHotels,
   fetchNearHotels,
-  requireAuthorization,
-  setLoadingComments, setLoadingHotel,
+  setLoadingComments,
+  setLoadingHotel,
   setLoadingNearHotels
-} from './actions';
+} from './offer-slice/offer-slice';
 import {errorHandle} from '../services/error-handle';
 import {convertComments, convertHotel, convertHotels, setAuthorization} from '../functions';
 import {UserApi} from '../types/user';

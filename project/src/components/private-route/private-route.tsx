@@ -4,7 +4,7 @@ import {AppRoutes, AuthorizationStatus} from '../../const';
 import {useAppSelector} from '../../hooks/store';
 
 function PrivateRoute({children}: PrivateRouteProps): JSX.Element {
-  const {authorizationStatus} = useAppSelector((state) => state);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
 
   return authorizationStatus === AuthorizationStatus.Auth ? children : <Navigate to={AppRoutes.Login} />;
 }

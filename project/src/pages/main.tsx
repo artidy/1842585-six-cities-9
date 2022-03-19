@@ -5,11 +5,11 @@ import Map from '../components/map/map';
 import Places from '../components/places/places';
 import Sorting from '../components/sorting/sorting';
 import {useAppDispatch, useAppSelector} from '../hooks/store';
-import {loadOffers} from '../store/actions';
+import {loadOffers} from '../store/main-slice/main-slice';
 import {getCityOffers} from '../functions';
 
 function Main(): JSX.Element {
-  const {cityOffers, city, sortingType, offers} = useAppSelector((state) => state);
+  const {cityOffers, city, sortingType, offers} = useAppSelector(({MAIN}) => MAIN);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

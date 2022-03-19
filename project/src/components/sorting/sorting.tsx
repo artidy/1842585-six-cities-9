@@ -2,13 +2,13 @@ import {useState} from 'react';
 
 import {SortingType} from '../../const';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
-import {changeSortingType} from '../../store/actions';
+import {changeSortingType} from '../../store/main-slice/main-slice';
 
 const INITIAL_OPEN = false;
 
 function Sorting(): JSX.Element {
   const sortingTypeList = Object.values(SortingType);
-  const {sortingType} = useAppSelector((state) => state);
+  const {sortingType} = useAppSelector(({MAIN}) => MAIN);
   const [isOpen, toggleOpen] = useState(INITIAL_OPEN);
   const dispatch = useAppDispatch();
 
