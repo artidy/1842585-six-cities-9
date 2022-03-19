@@ -12,7 +12,7 @@ type ReviewFormProps = {
 function ReviewForm({hotelId}: ReviewFormProps): JSX.Element {
   const [rating, setRating] = useState(INITIAL_RATING);
   const [message, setMessage] = useState(INITIAL_MESSAGE);
-  const {commentsLoaded} = useAppSelector((state) => state);
+  const {commentsLoaded} = useAppSelector(({OFFER}) => OFFER);
   const dispatch = useAppDispatch();
 
   function changeRating(evt: ChangeEvent<HTMLInputElement>) {

@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import Hotel from '../../types/hotel';
 import {useAppDispatch} from '../../hooks/store';
-import {changeSelectedPoint} from '../../store/actions';
+import {changeSelectedPoint} from '../../store/main-slice/main-slice';
 import {DEFAULT_SELECTED_POINT} from '../../const';
 
 type PlaceCardProps = {

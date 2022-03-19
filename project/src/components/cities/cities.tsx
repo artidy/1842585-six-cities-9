@@ -1,11 +1,11 @@
 import {CITIES, DEFAULT_CITY} from '../../const';
 import City from '../../types/city';
-import {changeCity} from '../../store/actions';
+import {changeCity} from '../../store/main-slice/main-slice';
 import {MouseEvent} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/store';
 
 function Cities(): JSX.Element {
-  const {city: currentCity} = useAppSelector((state) => state);
+  const {city: currentCity} = useAppSelector(({MAIN}) => MAIN);
   const dispatch = useAppDispatch();
 
   function getCurrentCity(name: string): City {

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import {logout} from '../../store/api-actions';
 
 function UserAuth(): JSX.Element {
-  const {authorizationStatus, user} = useAppSelector((state) => state);
+  const {authorizationStatus, user} = useAppSelector(({USER}) => USER);
   const dispatch = useAppDispatch();
 
   function onClickSignOut() {

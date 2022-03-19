@@ -20,8 +20,8 @@ function Offer(): JSX.Element {
     comments,
     currentOfferLoaded,
     nearOffersLoaded,
-    authorizationStatus,
-  } = useAppSelector((state) => state);
+  } = useAppSelector(({OFFER}) => OFFER);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
