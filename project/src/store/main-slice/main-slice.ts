@@ -34,9 +34,13 @@ const mainSlice = createSlice({
     changeSortingType: (state, action) => {
       state.sortingType = action.payload;
     },
+    changeFavorite: (state, action) => {
+      const idxOffer = state.offers.findIndex((offer) => offer.id === action.payload.id);
+      state.offers = [...state.offers.slice(0, idxOffer), action.payload, ...state.offers.slice(idxOffer + 1)];
+    },
   },
 });
 
-const {fetchHotels, changeCity, loadOffers, changeSelectedPoint, changeSortingType} = mainSlice.actions;
+const {fetchHotels, changeCity, loadOffers, changeSelectedPoint, changeSortingType, changeFavorite} = mainSlice.actions;
 
-export {mainSlice, fetchHotels, changeCity, loadOffers, changeSelectedPoint, changeSortingType};
+export {mainSlice, fetchHotels, changeCity, loadOffers, changeSelectedPoint, changeSortingType, changeFavorite};

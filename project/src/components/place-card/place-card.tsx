@@ -2,7 +2,8 @@ import {Link} from 'react-router-dom';
 import Hotel from '../../types/hotel';
 import {useAppDispatch} from '../../hooks/store';
 import {changeSelectedPoint} from '../../store/main-slice/main-slice';
-import {DEFAULT_SELECTED_POINT} from '../../const';
+import {DEFAULT_SELECTED_POINT, FavoritePreviewMinSize} from '../../const';
+import ButtonBookmark from '../button-bookmark/button-bookmark';
 
 type PlaceCardProps = {
   offer: Hotel;
@@ -32,12 +33,13 @@ function PlaceCard({offer}: PlaceCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark" />
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <ButtonBookmark
+            offerId={offer.id}
+            isFavorite={offer.isFavorite}
+            prefix={'place-card'}
+            width={FavoritePreviewMinSize.Width}
+            height={FavoritePreviewMinSize.Height}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

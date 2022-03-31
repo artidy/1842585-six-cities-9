@@ -3,7 +3,7 @@ import {api, store} from './index';
 import Hotel from '../types/hotel';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {authorization, requireAuthorization} from './user-slice/user-slice';
-import {fetchHotels} from './main-slice/main-slice';
+import {changeFavorite, fetchHotels} from './main-slice/main-slice';
 import {
   fetchComments,
   fetchCurrentHotel,
@@ -19,6 +19,7 @@ import Auth from '../types/auth';
 import {dropToken} from '../services/token';
 import UserComment from '../types/user-comment';
 import {AddComment} from '../types/api-comment';
+import FavoriteAction from '../types/favorite-action';
 
 const fetchHotelsAction = createAsyncThunk(
   'data/hotels',
@@ -89,6 +90,18 @@ const addCommentAction = createAsyncThunk(
   },
 );
 
+const changeFavoriteAction = createAsyncThunk(
+  'data/changeFavorite',
+  async ({hotelId, status}: FavoriteAction) => {
+    try {
+      const {data}= await api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
+      store.dispatch(changeFavorite(convertHotel(data)));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -134,6 +147,7 @@ export {
   fetchNearHotelsAction,
   fetchCommentsAction,
   addCommentAction,
+  changeFavoriteAction,
   checkUserAuth,
   login,
   logout
