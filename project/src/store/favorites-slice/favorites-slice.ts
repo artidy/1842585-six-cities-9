@@ -16,10 +16,14 @@ const favoritesSlice = createSlice({
   reducers: {
     fetchFavorites: (state, action) => {
       state.favorites = action.payload;
+      state.favoritesLoaded = true;
+    },
+    setFavoriteLoading: (state) => {
+      state.favoritesLoaded = false;
     },
   },
 });
 
-const {fetchFavorites} = favoritesSlice.actions;
+const {fetchFavorites, setFavoriteLoading} = favoritesSlice.actions;
 
-export {favoritesSlice, fetchFavorites};
+export {favoritesSlice, fetchFavorites, setFavoriteLoading};

@@ -3,7 +3,7 @@ import {api, store} from './index';
 import Hotel from '../types/hotel';
 import {APIRoute, AuthorizationStatus} from '../const';
 import {authorization, requireAuthorization} from './user-slice/user-slice';
-import {fetchHotels} from './main-slice/main-slice';
+import {changeFavorite, fetchHotels} from './main-slice/main-slice';
 import {
   fetchComments,
   fetchCurrentHotel,
@@ -13,12 +13,14 @@ import {
   setLoadingNearHotels
 } from './offer-slice/offer-slice';
 import {errorHandle} from '../services/error-handle';
-import {convertComments, convertHotel, convertHotels, setAuthorization} from '../functions';
+import {convertComments, convertFavorite, convertHotel, convertHotels, setAuthorization} from '../functions';
 import {UserApi} from '../types/user';
 import Auth from '../types/auth';
 import {dropToken} from '../services/token';
 import UserComment from '../types/user-comment';
 import {AddComment} from '../types/api-comment';
+import FavoriteAction from '../types/favorite-action';
+import {fetchFavorites} from './favorites-slice/favorites-slice';
 
 const fetchHotelsAction = createAsyncThunk(
   'data/hotels',
@@ -89,6 +91,30 @@ const addCommentAction = createAsyncThunk(
   },
 );
 
+const fetchFavoriteAction = createAsyncThunk(
+  'data/fetchFavorite',
+  async () => {
+    try {
+      const {data} = await api.get<Hotel[]>(APIRoute.Favorite);
+      store.dispatch(fetchFavorites(convertFavorite(data)));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+const changeFavoriteAction = createAsyncThunk(
+  'data/changeFavorite',
+  async ({hotelId, status}: FavoriteAction) => {
+    try {
+      const {data} = await api.post<Hotel>(`${APIRoute.Favorite}/${hotelId}/${status}`);
+      store.dispatch(changeFavorite(convertHotel(data)));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 const checkUserAuth = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -134,6 +160,8 @@ export {
   fetchNearHotelsAction,
   fetchCommentsAction,
   addCommentAction,
+  fetchFavoriteAction,
+  changeFavoriteAction,
   checkUserAuth,
   login,
   logout

@@ -108,6 +108,16 @@ enum NameSpace {
   Favorites = 'FAVORITES',
 }
 
+enum FavoritePreviewMinSize {
+  Width = 18,
+  Height = 19,
+}
+
+enum FavoritePreviewMaxSize {
+  Width = 31,
+  Height = 33,
+}
+
 export {
   AppRoutes,
   SortingType,
@@ -123,5 +133,7 @@ export {
   APIRoute,
   HTTP_CODE,
   AuthorizationStatus,
-  NameSpace
+  NameSpace,
+  FavoritePreviewMinSize,
+  FavoritePreviewMaxSize
 };

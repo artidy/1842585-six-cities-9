@@ -3,13 +3,14 @@ import {Navigate, useParams} from 'react-router-dom';
 import Map from '../components/map/map';
 import Reviews from '../components/reviews/reviews';
 import ReviewForm from '../components/review-form/review-form';
-import {AppRoutes, AuthorizationStatus} from '../const';
+import {AppRoutes, AuthorizationStatus, FavoritePreviewMaxSize} from '../const';
 import Places from '../components/places/places';
 import {useAppDispatch, useAppSelector} from '../hooks/store';
 import {fetchCommentsAction, fetchCurrentHotelAction, fetchNearHotelsAction} from '../store/api-actions';
 import Loader from '../components/loader/loader';
 import {getRatingWidth} from '../functions';
 import {useEffect} from 'react';
+import ButtonBookmark from '../components/button-bookmark/button-bookmark';
 
 function Offer(): JSX.Element {
   const {id} = useParams();
@@ -48,6 +49,7 @@ function Offer(): JSX.Element {
     bedrooms,
     price,
     goods,
+    isFavorite,
     isPremium,
     description,
     host: {
@@ -80,12 +82,13 @@ function Offer(): JSX.Element {
               <h1 className="property__name">
                 {title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
-                <svg className="property__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark" />
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <ButtonBookmark
+                offerId={currentOffer.id}
+                isFavorite={isFavorite}
+                prefix={'property'}
+                width={FavoritePreviewMaxSize.Width}
+                height={FavoritePreviewMaxSize.Height}
+              />
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">

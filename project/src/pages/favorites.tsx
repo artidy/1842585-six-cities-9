@@ -3,10 +3,25 @@ import {Link} from 'react-router-dom';
 import Favorite from '../types/favorite';
 import Hotel from '../types/hotel';
 import PlaceCard from '../components/place-card/place-card';
-import {useAppSelector} from '../hooks/store';
+import {useAppDispatch, useAppSelector} from '../hooks/store';
+import {useEffect} from 'react';
+import {fetchFavoriteAction} from '../store/api-actions';
+import Loader from '../components/loader/loader';
+import {setFavoriteLoading} from '../store/favorites-slice/favorites-slice';
 
 function Favorites(): JSX.Element {
-  const {favorites} = useAppSelector(({FAVORITES}) => FAVORITES);
+  const {favorites, favoritesLoaded} = useAppSelector(({FAVORITES}) => FAVORITES);
+  const {offers: appOffers} = useAppSelector(({MAIN}) => MAIN);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(setFavoriteLoading());
+    dispatch(fetchFavoriteAction());
+  }, [appOffers]);
+
+  if (!favoritesLoaded) {
+    return <Loader />;
+  }
 
   return (
     <main className="page__main page__main--favorites">
@@ -14,8 +29,8 @@ function Favorites(): JSX.Element {
         <section className="favorites">
           <h1 className="favorites__title">Saved listing</h1>
           <ul className="favorites__list">
-            {favorites.map(({id, city, offers}: Favorite) => (
-              <li key={id} className="favorites__locations-items">
+            {favorites.map(({city, offers}: Favorite) => (
+              <li key={city} className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">
                   <div className="locations__item">
                     <Link className="locations__item-link" to="/">
