@@ -6,6 +6,7 @@ import {store} from './store';
 import {authorization, requireAuthorization} from './store/user-slice/user-slice';
 import {UserApi} from './types/user';
 import UserComment from './types/user-comment';
+import Favorite from './types/favorite';
 
 function getCityOffers(offers: Hotel[], cityName: string, sortingType: string = SortingType.Popular): Hotel[] {
   const result = offers.filter(({city: cityOffer}: Hotel) => cityName === cityOffer.name);
@@ -123,6 +124,22 @@ function convertComments(comments: UserComment[]): UserComment[] {
   return comments.map((comment: UserComment) => convertComment(comment));
 }
 
+function convertFavorite(offers: Hotel[]): Favorite[] {
+  const favorites = [] as Favorite[];
+
+  offers.forEach((offer) => {
+    const currentFavorite = favorites.find((favorite) => favorite.city === offer.city.name);
+
+    if (currentFavorite === undefined) {
+      favorites.push({city: offer.city.name, offers: [offer] as Hotel[]});
+    } else {
+      currentFavorite.offers.push(offer);
+    }
+  });
+
+  return favorites;
+}
+
 function isCheckedAuth(authorizationStatus: AuthorizationStatus): boolean {
   return authorizationStatus === AuthorizationStatus.Unknown;
 }
@@ -139,6 +156,7 @@ export {
   convertHotel,
   convertHotels,
   convertComments,
+  convertFavorite,
   isCheckedAuth,
   setAuthorization,
   getRatingWidth
